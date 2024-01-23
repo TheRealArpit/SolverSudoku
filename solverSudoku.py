@@ -31,11 +31,12 @@ def find_empty(bo):
 def valid (bo,num,pos):
     #check row
     for i in range(len(bo)):
-        if bo[pos[0]][i] == num and pos[1] != num:
+        if bo[pos[0]][i] == num and pos[1] != i:
             return False
     #check the column
     for j in range (len(bo)):
-        if bo[i][pos[1]] and pos[0] != num:
+        if bo[j][pos[1]] == num and pos[0] != j:
+            print("here")
             return False
     #check box
     box_x = pos[1] // 3
@@ -47,4 +48,6 @@ def valid (bo,num,pos):
                 return False
     return True
 
-print(board)
+print_board(board)
+print(find_empty(board))
+print(valid(board,3, (0,2)))
