@@ -1,5 +1,5 @@
 board = [
-    [7,8,0,4,0,0,1,2,0],
+    [7, 8, 0, 4, 0, 0, 1, 2, 0],
     [6,0,0,0,7,5,0,0,9],
     [0,0,0,6,0,1,0,7,8],
     [0,0,7,0,4,0,2,6,0],
@@ -27,6 +27,7 @@ def find_empty(bo):
         for j in range(len(bo[0])):
             if bo[i][j] == 0:
                 return (i,j) #returns the pos of the empty
+    return None
 
 def valid (bo,num,pos):
     #check row
@@ -36,7 +37,6 @@ def valid (bo,num,pos):
     #check the column
     for j in range (len(bo)):
         if bo[j][pos[1]] == num and pos[0] != j:
-            print("here")
             return False
     #check box
     box_x = pos[1] // 3
@@ -48,6 +48,28 @@ def valid (bo,num,pos):
                 return False
     return True
 
+def solve_board(bo):
+    find = find_empty(bo)
+    if not find:
+        return True
+    else:
+        row,col = find
+
+    for i in range(1,10): #backtracking occurs here with recursion
+        if (valid(bo,i, (row,col))):
+            bo[row][col] = i
+            if solve_board(bo):
+                return True
+            bo[row][col] = 0
+    return False
+    #if a solution is valid,it replaces the square with the valid number and it continues to the next square
+    #if there is an invalid input during recursion, it doesn't change the square and leaves it at 0 and goes back to the previous changed square
+    #since there was an invalid input, it means the previous square was incorrect. so what happens is that the square gets put back to 0 and continues getting values from the for loop
+    #This continues until a correct valid input into the square.
+    #this is backtracking as if the program finds a square invalid, it goes back to the previous square and tries a different value. 
+
 print_board(board)
-print(find_empty(board))
-print(valid(board,3, (0,2)))
+solve_board(board)
+print("--------------------------------------------")
+print_board(board)
+
