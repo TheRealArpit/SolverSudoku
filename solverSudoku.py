@@ -22,4 +22,25 @@ def print_board(bo):
             else:
                 print(str(bo[i][j]) + " ", end="")
 
-print_board(board)
+def find_empty(bo):
+    for i in range(len(bo)):
+        for j in range(len(bo[0])):
+            if bo[i][j] == 0:
+                return (i,j) #returns the pos of the empty
+
+def valid (bo,num,pos):
+    #check row
+    for i in range(len(bo)):
+        if bo[pos[0]][i] == num and pos[1] != num:
+            return False
+    #check the column
+    for j in range (len(bo)):
+        if bo[i][pos[1]] and pos[0] != num:
+            return False
+    #check box
+    box_x = pos[1] // 3
+    box_y = pos[0] // 3
+    #turns the 9x9 to a 3x3 where x,y is the start of 3x3
+    
+
+print(find_empty(board))
